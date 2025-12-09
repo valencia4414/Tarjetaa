@@ -1,0 +1,300 @@
+:root {
+    --bg-color: #0f172a;
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --glass-shine: rgba(255, 255, 255, 0.1);
+    --tree-green-dark: #166534;
+    --tree-green-light: #22c55e;
+    --gold: #fbbf24;
+    --red: #ef4444;
+    --snow-white: #ffffff;
+    --base-wood: #78350f;
+    --base-wood-dark: #451a03;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: radial-gradient(circle at center, #1e293b 0%, #020617 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.container {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.title {
+    font-family: 'Mountains of Christmas', cursive;
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+    animation: glow 3s infinite alternate;
+}
+
+.message {
+    margin-top: 2rem;
+    font-size: 1.2rem;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+/* --- ESCENA --- */
+.scene {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 20px;
+    height: 400px;
+    position: relative;
+}
+
+/* --- GLOBO DE NIEVE --- */
+.snow-globe {
+    position: relative;
+    width: 300px;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10;
+}
+
+.glass {
+    width: 280px;
+    height: 280px;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05) 40%, rgba(255, 255, 255, 0) 60%);
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.2),
+        inset 0 0 30px rgba(255, 255, 255, 0.1),
+        inset 10px 10px 20px rgba(255, 255, 255, 0.2);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(2px);
+    transform: translateZ(0); /* Fix for Safari overflow */
+}
+
+.reflection {
+    position: absolute;
+    top: 15%;
+    left: 15%;
+    width: 20%;
+    height: 15%;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at center, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+    transform: rotate(-45deg);
+    pointer-events: none;
+}
+
+/* --- BASE DEL GLOBO --- */
+.base {
+    margin-top: -30px;
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 5;
+}
+
+.base-top {
+    width: 200px;
+    height: 20px;
+    background: linear-gradient(to right, var(--base-wood-dark), var(--base-wood), var(--base-wood-dark));
+    border-radius: 10px 10px 0 0;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+}
+
+.base-bottom {
+    width: 220px;
+    height: 60px;
+    background: linear-gradient(to right, #3f1d08, #5c2b0c, #3f1d08);
+    border-radius: 5px 5px 20px 20px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+    position: relative;
+}
+
+.plaque {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(to bottom, #fcd34d, #d97706);
+    padding: 2px 15px;
+    border-radius: 4px;
+    color: #451a03;
+    font-weight: bold;
+    font-size: 0.9rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    border: 1px solid #f59e0b;
+}
+
+/* --- ÁRBOL PRINCIPAL (DENTRO) --- */
+.globe-inner-scene {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.ground {
+    position: absolute;
+    bottom: -20px;
+    width: 120%;
+    height: 60px;
+    background: radial-gradient(circle at center, #e2e8f0 0%, #cbd5e1 100%);
+    border-radius: 50%;
+    box-shadow: inset 0 5px 10px rgba(0,0,0,0.1);
+}
+
+.tree {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 2;
+    margin-bottom: 10px;
+}
+
+.trunk {
+    width: 16px;
+    height: 25px;
+    background: linear-gradient(to right, #3f2e18, #5c4024);
+    border-radius: 2px;
+}
+
+.layer {
+    width: 0;
+    height: 0;
+    border-left: solid transparent;
+    border-right: solid transparent;
+    border-bottom: solid var(--tree-green-dark);
+    position: relative;
+    margin-bottom: -15px; /* Overlap */
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+}
+
+.layer::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: -50%; /* This needs to be calculated based on width, but for borders it's tricky. Using pseudo-element for gradient effect */
+    width: 0;
+    height: 0;
+    border-left: inherit;
+    border-right: inherit;
+    border-bottom: solid var(--tree-green-light);
+    transform: scale(0.8) translateY(2px);
+    opacity: 0.3;
+}
+
+.layer-1 {
+    border-left-width: 50px;
+    border-right-width: 50px;
+    border-bottom-width: 60px;
+    z-index: 3;
+}
+
+.layer-2 {
+    border-left-width: 40px;
+    border-right-width: 40px;
+    border-bottom-width: 50px;
+    z-index: 4;
+}
+
+.layer-3 {
+    border-left-width: 30px;
+    border-right-width: 30px;
+    border-bottom-width: 40px;
+    z-index: 5;
+}
+
+.star {
+    width: 20px;
+    height: 20px;
+    background: var(--gold);
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    margin-bottom: -5px;
+    z-index: 6;
+    animation: twinkle 2s infinite ease-in-out;
+}
+
+.bauble {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+    z-index: 10;
+}
+
+.b1 { top: 25px; left: -10px; }
+.b2 { top: 45px; right: -15px; background: var(--gold); }
+.b3 { top: 65px; left: 10px; background: #3b82f6; }
+
+/* --- ÁRBOLES DE FONDO (FUERA) --- */
+.background-tree {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 120px solid rgba(22, 101, 52, 0.4);
+    filter: blur(2px);
+    margin-bottom: -10px;
+}
+
+.tree-left { transform: rotate(-5deg) scale(0.8); }
+.tree-right { transform: rotate(5deg) scale(0.9); }
+
+/* --- NIEVE --- */
+.snow-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 20;
+}
+
+.snowflake {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+/* --- ANIMACIONES --- */
+@keyframes glow {
+    from { text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+    to { text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 10px rgba(255, 255, 255, 0.5); }
+}
+
+@keyframes twinkle {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10px) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(300px) translateX(20px); opacity: 0; }
+}
